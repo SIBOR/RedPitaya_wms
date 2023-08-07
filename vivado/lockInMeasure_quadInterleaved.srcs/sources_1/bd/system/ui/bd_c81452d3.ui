@@ -1,0 +1,34 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.75",
+   "Default View_TopLeft":"-220,-176",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port port-id_aclk -pg 1 -lvl 0 -x 0 -y 90 -defaultsOSRD
+preplace portBus demod_out -pg 1 -lvl 5 -x 1240 -y 180 -defaultsOSRD
+preplace portBus clock_divide -pg 1 -lvl 0 -x 0 -y 0 -defaultsOSRD
+preplace portBus bit_select -pg 1 -lvl 0 -x 0 -y 160 -defaultsOSRD
+preplace portBus analog_data -pg 1 -lvl 0 -x 0 -y 30 -defaultsOSRD
+preplace portBus reference_oscillator -pg 1 -lvl 0 -x 0 -y 60 -defaultsOSRD
+preplace inst c_counter_binary_1 -pg 1 -lvl 1 -x 160 -y 280 -defaultsOSRD
+preplace inst variable_bitshift_0 -pg 1 -lvl 4 -x 1060 -y 180 -defaultsOSRD
+preplace inst multiply_0 -pg 1 -lvl 1 -x 160 -y 70 -defaultsOSRD
+preplace inst xlslice_1 -pg 1 -lvl 2 -x 450 -y 280 -defaultsOSRD
+preplace inst lpf2_0 -pg 1 -lvl 2 -x 450 -y 80 -defaultsOSRD
+preplace inst lpf2_1 -pg 1 -lvl 3 -x 750 -y 270 -defaultsOSRD
+preplace netloc aclk_1 1 0 4 20 150 300 200 NJ 200 NJ
+preplace netloc bit_select_1 1 0 4 NJ 160 NJ 160 NJ 160 NJ
+preplace netloc c_counter_binary_1_Q 1 1 1 NJ 280
+preplace netloc variable_bitshift_0_trunc_out 1 4 1 N 180
+preplace netloc in_a_1 1 0 1 20J 30n
+preplace netloc in_b_1 1 0 1 20J 60n
+preplace netloc multiply_0_prod_out 1 1 1 N 70
+preplace netloc lpf2_0_filter_out 1 2 1 590 80n
+preplace netloc xlslice_1_Dout 1 2 1 NJ 280
+preplace netloc lpf2_1_filter_out 1 3 1 890 180n
+levelinfo -pg 1 0 160 450 750 1060 1240
+pagesize -pg 1 -db -bbox -sgen -220 -20 1410 340
+"
+}
+

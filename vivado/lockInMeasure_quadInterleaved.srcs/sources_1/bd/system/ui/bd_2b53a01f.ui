@@ -1,0 +1,24 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-460,-210",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace portBus Din -pg 1 -lvl 0 -x 0 -y 50 -defaultsOSRD
+preplace portBus sine_freq -pg 1 -lvl 2 -x 260 -y 150 -defaultsOSRD
+preplace portBus ramp_freq -pg 1 -lvl 2 -x 260 -y 50 -defaultsOSRD
+preplace portBus start_bit -pg 1 -lvl 2 -x 260 -y 250 -defaultsOSRD
+preplace inst freq -pg 1 -lvl 1 -x 130 -y 150 -defaultsOSRD
+preplace inst ramp_freq -pg 1 -lvl 1 -x 130 -y -70 -defaultsOSRD
+preplace inst start_bit -pg 1 -lvl 1 -x 130 -y 250 -defaultsOSRD
+preplace inst output_shift -pg 1 -lvl 1 -x 130 -y 40 -defaultsOSRD -resize 160 88
+preplace netloc GPIO_gpio_io_o 1 0 1 20 -70n
+preplace netloc freq_Dout 1 1 1 NJ 150
+preplace netloc ramp_freq_Dout 1 1 1 240J -70n
+preplace netloc start_bit_Dout 1 1 1 NJ 250
+levelinfo -pg 1 0 130 260
+pagesize -pg 1 -db -bbox -sgen -110 -130 410 410
+"
+}
+
