@@ -237,7 +237,7 @@ in Buffer</string>
         <number>8</number>
        </property>
        <property name="value">
-        <number>4</number>
+        <number>0</number>
        </property>
        <property name="displayIntegerBase">
         <number>10</number>
@@ -247,7 +247,7 @@ in Buffer</string>
      <item row="2" column="1">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Pamp Per</string>
+        <string>Ramp Per</string>
        </property>
       </widget>
      </item>
@@ -345,7 +345,7 @@ in Buffer</string>
      <attribute name="title">
       <string>Settings</string>
      </attribute>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="text_fname">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -355,7 +355,7 @@ in Buffer</string>
        </rect>
       </property>
       <property name="text">
-       <string>wms_data%d.pkl</string>
+       <string>data/wms_data%d.pkl</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_9">

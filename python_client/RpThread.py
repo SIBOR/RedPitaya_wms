@@ -7,7 +7,6 @@ import struct
 import time
 import numpy as np
 from datetime import datetime
-import os
 
 PAUSE_TIME = 0.01
 
@@ -41,6 +40,7 @@ class RpThread(threading.Thread):
                 comms.append(self.commQueue.get())
             for c in comms:
                 self.rp_socket.send(c.encode())
+                time.sleep(PAUSE_TIME)
 
             # Wait and continue loop if aquisition is not started
             if(not self.acq_started):

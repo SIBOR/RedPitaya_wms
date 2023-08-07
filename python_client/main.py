@@ -56,6 +56,8 @@ class MainWindow(uiclass, baseclass):
         self.box_ramp.valueChanged.connect(self.change_ramp)
         self.box_scale.valueChanged.connect(self.change_scale)
 
+        self.text_fname.editingFinished.connect(self.check_fname_input)
+
         #-----------Set up timers--------------
         self.timer_plot_update = QtCore.QTimer(self)
         self.timer_plot_update.setSingleShot(False)
@@ -64,6 +66,8 @@ class MainWindow(uiclass, baseclass):
 
         self.redpitaya = RpThread.RpThread()
         self.data_buffer = []
+
+        self.base_file_name = self.text_fname.text()
 
     #Called when main window is closed
     def closeEvent(self, event):
@@ -84,12 +88,6 @@ class MainWindow(uiclass, baseclass):
             self.redpitaya.start() # Start the thread if we connected
             print("Red Pitaya Connected :)")
 
-            # Send default parameters
-            self.change_depth()
-            self.change_freq()
-            self.change_ramp()
-            self.change_scale()
-
             # Enable controls
             self.button_connect.setEnabled(False)
             self.button_start.setEnabled(True) #Un-grey the controls
@@ -104,6 +102,12 @@ class MainWindow(uiclass, baseclass):
             self.change_led(255)
             time.sleep(0.1)
             self.change_led(0)
+
+            # Send default parameters
+            self.change_depth()
+            self.change_freq()
+            self.change_scale()
+            self.change_ramp()
 
         else:
             print("Check connection!")
@@ -163,8 +167,9 @@ class MainWindow(uiclass, baseclass):
         # Avoid overwriting other data with same file name
         # by adding a unique number to the end.
         index = 0
-        fName_base = BASE_FILE_NAME
+        fName_base = self.base_file_name
         fName = fName_base % index
+
         # Loop until we find a file name that doesn't already exist
         while os.path.isfile(fName):
             index += 1
@@ -199,6 +204,25 @@ class MainWindow(uiclass, baseclass):
             p.setData(np.arange(len(d[i])), d[i])
         for i,p in enumerate(self.plots['meas']):
             p.setData(np.arange(len(d[i])), d[i+4])
+
+    def check_fname_input(self):
+        name = self.text_fname.text()
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("Alert")
+        if('/' in name):
+            folders = name.split('/')
+            folderPath = ''
+            for f in folders[:-1]:
+                folderPath += f + '/'
+            if(not os.path.isdir(folderPath)):
+                dlg.setText("Invalid folder:\n" + str(folderPath))
+                button = dlg.exec()
+                name = folders[-1]
+        if("%d" not in name):
+            dlg.setText("Use %%d to specify increment number\n" + str(folderPath))
+            button = dlg.exec()
+            name = name + "%d"
+        self.base_file_name = name
 
     def change_led(self, val: int):
         self.redpitaya.set_led(val)
