@@ -194,7 +194,7 @@ in Buffer</string>
      <rect>
       <x>640</x>
       <y>310</y>
-      <width>160</width>
+      <width>152</width>
       <height>156</height>
      </rect>
     </property>
@@ -208,7 +208,7 @@ in Buffer</string>
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>255</number>
+        <number>1024</number>
        </property>
        <property name="value">
         <number>100</number>
@@ -341,6 +341,37 @@ in Buffer</string>
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Settings</string>
+     </attribute>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>24</y>
+        <width>221</width>
+        <height>34</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>wms_data%d.pkl</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Base File Name</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="Line" name="line_3">
     <property name="geometry">
@@ -353,6 +384,58 @@ in Buffer</string>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>470</y>
+      <width>151</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Modulation Frequency</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_freq">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>490</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0 Hz</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>520</y>
+      <width>151</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ramp Period</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_ramp">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>540</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0 Sec</string>
     </property>
    </widget>
   </widget>

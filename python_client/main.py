@@ -4,10 +4,14 @@ from PyQt5 import QtWidgets, QtCore
 import pyqtgraph as pg
 import numpy as np
 import time
+import os
+import pickle
 
 import RpThread
 
 RP_PORT = 8080
+
+BASE_FILE_NAME = 'data/wms_data_%d.pkl'
 
 uiclass, baseclass = pg.Qt.loadUiType("mainwindow.ui")
 
@@ -44,6 +48,7 @@ class MainWindow(uiclass, baseclass):
         self.button_start.clicked.connect(self.acq_start)
         self.button_stop.clicked.connect(self.acq_stop)
         self.button_clear.clicked.connect(self.buffer_clear)
+        self.button_save.clicked.connect(self.buffer_save)
 
         #-----------Set up value change actions------
         self.box_freq.valueChanged.connect(self.change_freq)
@@ -106,6 +111,11 @@ class MainWindow(uiclass, baseclass):
     def change_freq(self):
         val = self.box_freq.value()
         self.redpitaya.set_mod_freq(val)
+        freq_khz = (125e3*val/65536)
+        if(freq_khz > 1e3):
+            self.label_freq.setText("%.3f MHz" % (freq_khz/1e3))
+        else:
+            self.label_freq.setText("%.1f KHz" % (freq_khz))
 
     def change_depth(self):
         val = self.box_depth.value()
@@ -114,6 +124,12 @@ class MainWindow(uiclass, baseclass):
     def change_ramp(self):
         val = self.box_ramp.value()
         self.redpitaya.set_ramp_per(val)
+        N = 7750
+        ramp_per_seconds = 8*17*2**val*N/125e6
+        if(ramp_per_seconds < 1):
+            self.label_ramp.setText("%d msec" % (ramp_per_seconds*1000))
+        else:
+            self.label_ramp.setText("%d sec" % (ramp_per_seconds))
 
     def change_scale(self):
         val = self.box_scale.value()
@@ -142,6 +158,25 @@ class MainWindow(uiclass, baseclass):
         for d in self.redpitaya.get_data():
             self.data_buffer.append(d)
         self.label_buffer_count.setText(str(len(self.data_buffer)))
+
+    def buffer_save(self):
+        # Avoid overwriting other data with same file name
+        # by adding a unique number to the end.
+        index = 0
+        fName_base = BASE_FILE_NAME
+        fName = fName_base % index
+        # Loop until we find a file name that doesn't already exist
+        while os.path.isfile(fName):
+            index += 1
+            fName = fName_base % index
+        print("Saving data to: " + fName)
+        with open(fName, 'wb') as f:
+            pickle.dump(self.data_buffer, f)
+
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("Alert")
+        dlg.setText("Data has been saved to:\n" + str(fName))
+        button = dlg.exec()
 
     def update_plots(self):
         self.buffer_update()

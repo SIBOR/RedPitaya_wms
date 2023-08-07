@@ -7,6 +7,7 @@ import struct
 import time
 import numpy as np
 from datetime import datetime
+import os
 
 PAUSE_TIME = 0.01
 
