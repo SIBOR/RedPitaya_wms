@@ -23,25 +23,31 @@ class MainWindow(uiclass, baseclass):
         #-------------Set up plots---------------------
         x = np.arange(8000)
         y = np.sin(x/1000)
-        self.plots = {'ref': [], 'meas': []}
-        self.plotLabels = ['1f-In Phase',
-                           '1f-Quadrature',
-                           '2f-In Phase',
-                           '2f-Quadrature']
+        self.curves = {'ref': [], 'meas': []}
+        self.plots  = {'ref': [], 'meas': []}
+        self.plotLabels_iq = ['1f-In Phase',
+                              '1f-Quadrature',
+                              '2f-In Phase',
+                              '2f-Quadrature']
+        self.plotLabels_mp = ['1f-Magnitude',
+                              '1f-Phase Angle',
+                              '2f-Magnitude',
+                              '2f-Phase Angle']
 
         # Set up both plots exactly the same way
         for k,pw in [('ref',self.plotwidget_r), ('meas',self.plotwidget_m)]:
             # Add all plots to each GraphicsLayoutWidget defined in mainwindow.ui
-            for i,l in enumerate(self.plotLabels):
+            for i,l in enumerate(self.plotLabels_iq):
                 #Create plot
-                p = pw.addPlot(name=str(i), title=self.plotLabels[i])
+                p = pw.addPlot(name=str(i), title=self.plotLabels_iq[i])
                 curve = p.plot()
                 curve.setData(x,y)
-                if(i!=len(self.plotLabels) - 1):
+                if(i!=len(self.plotLabels_iq) - 1):
                     pw.nextRow()
                 if(i!=0):
                     p.setXLink('0') #Link all x-axes together
-                self.plots[k].append(curve)
+                self.curves[k].append(curve)
+                self.plots[k].append(p)
 
         #-----------Set up button actions--------
         self.button_connect.clicked.connect(self.rp_connect)
@@ -108,6 +114,8 @@ class MainWindow(uiclass, baseclass):
             self.change_freq()
             self.change_scale()
             self.change_ramp()
+
+            self.label_connection_status.setText("Connected.")
 
         else:
             print("Check connection!")
@@ -191,19 +199,40 @@ class MainWindow(uiclass, baseclass):
             return
         d = last_data['data']
 
-        ref_1f_i = d[0]
-        ref_1f_q = d[1]
-        ref_2f_i = d[2]
-        ref_2f_q = d[3]
-        exp_1f_i = d[4]
-        exp_1f_q = d[5]
-        exp_2f_i = d[6]
-        exp_2f_q = d[7]
+        #ref_1f_i = d[0]
+        #ref_1f_q = d[1]
+        #ref_2f_i = d[2]
+        #ref_2f_q = d[3]
+        #exp_1f_i = d[4]
+        #exp_1f_q = d[5]
+        #exp_2f_i = d[6]
+        #exp_2f_q = d[7]
 
-        for i,p in enumerate(self.plots['ref']):
-            p.setData(np.arange(len(d[i])), d[i])
-        for i,p in enumerate(self.plots['meas']):
-            p.setData(np.arange(len(d[i])), d[i+4])
+
+        if(self.radio_graph_iq.isChecked()):
+            labels = self.plotLabels_iq
+            for i,c in enumerate(self.curves['ref']):
+                c.setData(np.arange(len(d[i])), d[i])
+            for i,c in enumerate(self.curves['meas']):
+                c.setData(np.arange(len(d[i])), d[i+4])
+        elif(self.radio_graph_mp.isChecked()):
+            labels = self.plotLabels_mp
+            x = np.arange(len(d[0]))
+            self.curves['ref'][0].setData(x, np.sqrt(d[0]**2 + d[1]**2))
+            self.curves['ref'][1].setData(x, np.arctan2(d[0], d[1]))
+            self.curves['ref'][2].setData(x, np.sqrt(d[2]**2 + d[3]**2))
+            self.curves['ref'][3].setData(x, np.arctan2(d[2], d[3]))
+            self.curves['meas'][0].setData(x, np.sqrt(d[4]**2 + d[5]**2))
+            self.curves['meas'][1].setData(x, np.arctan2(d[4], d[5]))
+            self.curves['meas'][2].setData(x, np.sqrt(d[6]**2 + d[7]**2))
+            self.curves['meas'][3].setData(x, np.arctan2(d[6], d[7]))
+
+        for p, l in zip(self.plots['ref'], labels):
+            p.setTitle(l)
+        for p, l in zip(self.plots['meas'], labels):
+            p.setTitle(l)
+
+
 
     def check_fname_input(self):
         name = self.text_fname.text()
@@ -223,7 +252,7 @@ class MainWindow(uiclass, baseclass):
             button = dlg.exec()
             name = name + "%d"
         self.base_file_name = name
-
+# Set led to 8-bit binary value
     def change_led(self, val: int):
         self.redpitaya.set_led(val)
 
