@@ -24,6 +24,8 @@ const int sin_freq_default = 100;
 const int ramp_per_default = 5;
 const int led_value_default = 255;
 const int shift_val_default = 14;
+const int scale_1_default = 14;
+const int scale_2_default = 14;
 const int mod_depth_default = 255;
 
 //---------------------------------------
@@ -90,9 +92,11 @@ void set_gpio2(int led_value) {
     *((uint32_t *)(cfg2 + 8)) = val2;
 }
 
-void set_gpio3(int mod_depth, int filter_B) {
-    uint32_t val3 = mod_depth;
-    val3 = (val3 << 8) + filter_B;
+void set_gpio3(int mod_depth, int scale_1, int scale_2, int reset) {
+    uint32_t val3 = (reset & 0x1);
+    val3 = (val3 << 4) + (scale_2 & 0xF);
+    val3 = (val3 << 4) + (scale_1 & 0xF);
+    val3 = (val3 << 8) + (mod_depth & 0xFF);
     //*((uint32_t *)(cfg3 + 8)) = val3 + (1<<16); //reset filter
     *((uint32_t *)(cfg3 + 8)) = val3;
 }
@@ -116,6 +120,8 @@ int serve(int sockfd)
     int sin_freq = sin_freq_default;
     int mod_depth = mod_depth_default;
     int shift_val = shift_val_default;
+    int scale_1 = scale_1_default;
+    int scale_2 = scale_2_default;
     led_value = led_value_default;
 
     printf("Opening /dev/mem\n");
@@ -136,7 +142,7 @@ int serve(int sockfd)
     printf("GPIO 1 values set.\n");
     set_gpio2(led_value_default);
     printf("GPIO 2 values set.\n");
-    set_gpio3(mod_depth_default, 0);
+    set_gpio3(mod_depth_default, scale_1_default, scale_2_default, 0);
     printf("GPIO 3 values set.\n");
 
     printf("Getting acq count.\n");
@@ -169,12 +175,20 @@ int serve(int sockfd)
             set_gpio1(sin_freq, ramp_per, shift_val, 0);
             set_gpio2(1);
         }
-        else if(strncmp(cmd_buff, "shift", 5)==0) {
-            strcpy(val_buff, cmd_buff + 6);
+        else if(strncmp(cmd_buff, "scale1", 6)==0) {
+            strcpy(val_buff, cmd_buff + 7);
             int newval = atoi(val_buff);
-            printf("Setting shift value to: %d\n", newval);
-            shift_val = newval;
-            set_gpio1(sin_freq, ramp_per, shift_val, 0);
+            printf("Setting scale_1 value to: %d\n", newval);
+            scale_1 = newval;
+            set_gpio3(mod_depth, scale_1, scale_2, 0);
+            set_gpio2(1);
+        }
+        else if(strncmp(cmd_buff, "scale2", 6)==0) {
+            strcpy(val_buff, cmd_buff + 7);
+            int newval = atoi(val_buff);
+            printf("Setting scale_2 value to: %d\n", newval);
+            scale_2 = newval;
+            set_gpio3(mod_depth, scale_1, scale_2, 0);
             set_gpio2(1);
         }
         else if(strncmp(cmd_buff, "led", 3)==0) {
@@ -189,17 +203,17 @@ int serve(int sockfd)
             int newval = atoi(val_buff);
             printf("Setting modulation depth value to: %d\n", newval);
             mod_depth = newval;
-            set_gpio3(mod_depth, 0);
+            set_gpio3(mod_depth, scale_1, scale_2, 0);
         }
         else if(strncmp(cmd_buff, "data", 4)==0) {
-            printf("Sending Data!\n");
+            //printf("Sending Data!\n");
             read_data(analogInt);
             if( send_data(sockfd, analogInt) != 0)
                 printf("Error sending data!!\n");
             set_gpio2(2);
         }
         else if(strncmp(cmd_buff, "start", 5)==0) {
-            printf("Starting measurement!\n");
+            //printf("Starting measurement!\n");
             acq_count_last = get_acq_count();
             set_gpio1(sin_freq, ramp_per, shift_val, 1);
             sleep(0.01); // Pause to make sure bit is asserted in FPGA
@@ -225,7 +239,7 @@ int serve(int sockfd)
                     c=0;
                 }
             }
-            printf("Done.\b");
+            //printf("Done.\b");
             if(send(sockfd, &acq_count, sizeof(acq_count), MSG_NOSIGNAL) == -1)
                     return -1;
         }

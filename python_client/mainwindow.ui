@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>816</width>
-    <height>653</height>
+    <width>1271</width>
+    <height>875</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="button_connect">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>1100</x>
       <y>70</y>
       <width>81</width>
       <height>36</height>
@@ -30,10 +30,10 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>1070</x>
       <y>10</y>
       <width>20</width>
-      <height>571</height>
+      <height>861</height>
      </rect>
     </property>
     <property name="orientation">
@@ -43,7 +43,7 @@
    <widget class="QLineEdit" name="text_rp_ip">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>1110</x>
       <y>30</y>
       <width>113</width>
       <height>34</height>
@@ -56,7 +56,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>658</x>
+      <x>1118</x>
       <y>10</y>
       <width>90</width>
       <height>20</height>
@@ -69,7 +69,7 @@
    <widget class="QLabel" name="label_connection_status">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>1190</x>
       <y>70</y>
       <width>81</width>
       <height>31</height>
@@ -88,7 +88,7 @@ Connected!</string>
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>1090</x>
       <y>110</y>
       <width>181</width>
       <height>20</height>
@@ -104,7 +104,7 @@ Connected!</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>1090</x>
       <y>130</y>
       <width>81</width>
       <height>36</height>
@@ -120,7 +120,7 @@ Connected!</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>1190</x>
       <y>130</y>
       <width>81</width>
       <height>36</height>
@@ -136,7 +136,7 @@ Connected!</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>1170</x>
       <y>180</y>
       <width>91</width>
       <height>36</height>
@@ -152,7 +152,7 @@ Connected!</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>1170</x>
       <y>220</y>
       <width>91</width>
       <height>36</height>
@@ -165,7 +165,7 @@ Connected!</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>626</x>
+      <x>1086</x>
       <y>215</y>
       <width>81</width>
       <height>41</height>
@@ -179,7 +179,7 @@ in Buffer</string>
    <widget class="QLabel" name="label_buffer_count">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>1090</x>
       <y>180</y>
       <width>41</width>
       <height>40</height>
@@ -192,10 +192,10 @@ in Buffer</string>
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>1100</x>
       <y>310</y>
       <width>152</width>
-      <height>156</height>
+      <height>196</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -254,12 +254,12 @@ in Buffer</string>
      <item row="3" column="1">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Scale</string>
+        <string>Scale Ref</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QSpinBox" name="box_scale">
+      <widget class="QSpinBox" name="box_scale_1">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -297,6 +297,32 @@ in Buffer</string>
        </property>
       </widget>
      </item>
+     <item row="4" column="0">
+      <widget class="QSpinBox" name="box_scale_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>14</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="displayIntegerBase">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Scale Field</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QTabWidget" name="tabWidget">
@@ -304,8 +330,8 @@ in Buffer</string>
      <rect>
       <x>0</x>
       <y>10</y>
-      <width>621</width>
-      <height>641</height>
+      <width>1071</width>
+      <height>861</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -320,8 +346,8 @@ in Buffer</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>611</width>
-        <height>611</height>
+        <width>1061</width>
+        <height>831</height>
        </rect>
       </property>
      </widget>
@@ -335,8 +361,8 @@ in Buffer</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>611</width>
-        <height>611</height>
+        <width>1061</width>
+        <height>831</height>
        </rect>
       </property>
      </widget>
@@ -471,7 +497,7 @@ in Buffer</string>
    <widget class="Line" name="line_3">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>1090</x>
       <y>280</y>
       <width>181</width>
       <height>20</height>
@@ -484,8 +510,8 @@ in Buffer</string>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>470</y>
+      <x>1100</x>
+      <y>530</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -497,8 +523,8 @@ in Buffer</string>
    <widget class="QLabel" name="label_freq">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>490</y>
+      <x>1120</x>
+      <y>550</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -510,8 +536,8 @@ in Buffer</string>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>520</y>
+      <x>1100</x>
+      <y>580</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -523,8 +549,8 @@ in Buffer</string>
    <widget class="QLabel" name="label_ramp">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>540</y>
+      <x>1120</x>
+      <y>600</y>
       <width>81</width>
       <height>20</height>
      </rect>

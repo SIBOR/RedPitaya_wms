@@ -60,7 +60,8 @@ class MainWindow(uiclass, baseclass):
         self.box_freq.valueChanged.connect(self.change_freq)
         self.box_depth.valueChanged.connect(self.change_depth)
         self.box_ramp.valueChanged.connect(self.change_ramp)
-        self.box_scale.valueChanged.connect(self.change_scale)
+        self.box_scale_1.valueChanged.connect(self.change_scale_1)
+        self.box_scale_2.valueChanged.connect(self.change_scale_2)
 
         self.text_fname.editingFinished.connect(self.check_fname_input)
 
@@ -101,8 +102,9 @@ class MainWindow(uiclass, baseclass):
             self.button_clear.setEnabled(True)
             self.box_freq.setEnabled(True)
             self.box_depth.setEnabled(True)
-            self.box_ramp.setEnabled(True)
-            self.box_scale.setEnabled(True)
+            self.box_ramp.setEnabled(True) # Disabled in firmware right now
+            self.box_scale_1.setEnabled(True)
+            self.box_scale_2.setEnabled(True)
             self.change_led(0)
             time.sleep(0.1)
             self.change_led(255)
@@ -112,7 +114,8 @@ class MainWindow(uiclass, baseclass):
             # Send default parameters
             self.change_depth()
             self.change_freq()
-            self.change_scale()
+            self.change_scale_1()
+            self.change_scale_2()
             self.change_ramp()
 
             self.label_connection_status.setText("Connected.")
@@ -143,9 +146,13 @@ class MainWindow(uiclass, baseclass):
         else:
             self.label_ramp.setText("%d sec" % (ramp_per_seconds))
 
-    def change_scale(self):
-        val = self.box_scale.value()
-        self.redpitaya.set_scale(14 - val)
+    def change_scale_1(self):
+        val = self.box_scale_1.value()
+        self.redpitaya.set_scale_1(14 - val)
+
+    def change_scale_2(self):
+        val = self.box_scale_2.value()
+        self.redpitaya.set_scale_2(14 - val)
 
     def acq_start(self):
         rv = self.redpitaya.acq_start()

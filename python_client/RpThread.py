@@ -8,7 +8,7 @@ import time
 import numpy as np
 from datetime import datetime
 
-PAUSE_TIME = 0.01
+PAUSE_TIME = 0.001
 
 class RpThread(threading.Thread):
     def __init__(self):
@@ -24,7 +24,8 @@ class RpThread(threading.Thread):
         
         self.meas_params = {'mod_freq' : None,
                             'ramp_per' : None,
-                            'scale'    : None,
+                            'scale1'   : None,
+                            'scale2'   : None,
                             'mod_depth': None}
         
         self.datQueue = queue.Queue()
@@ -120,11 +121,18 @@ class RpThread(threading.Thread):
         self.meas_params['ramp_per'] = period
 
 # Used to set parameter by other process
-    def set_scale(self, bitshift: int):
+    def set_scale_1(self, bitshift: int):
         if(not self.is_connected()):
             return
-        self.commQueue.put("shift %d" % (bitshift))
-        self.meas_params['scale'] = bitshift
+        self.commQueue.put("scale1 %d" % (bitshift))
+        self.meas_params['scale1'] = bitshift
+
+# Used to set parameter by other process
+    def set_scale_2(self, bitshift: int):
+        if(not self.is_connected()):
+            return
+        self.commQueue.put("scale2 %d" % (bitshift))
+        self.meas_params['scale2'] = bitshift
 
 # Used to set parameter by other process
     def set_mod_depth(self, amplitude: int):
